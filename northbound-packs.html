@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Northbound Packs — Handcrafted Canadian Backpacks</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --forest: #1C2B1A;
+      --moss: #2D4A28;
+      --sage: #4A7040;
+      --tan: #C4A882;
+      --cream: #F5F0E8;
+      --bark: #8B6914;
+      --red: #C8102E;
+      --text: #1C2B1A;
+      --muted: #6B7B62;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(28,43,26,0.08);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--forest);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--forest); }
+    .nav-cta {
+      background: var(--forest); color: var(--cream);
+      padding: 10px 24px; border-radius: 4px;
+      font-size: 0.85rem; font-weight: 500; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--moss); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      padding-top: 80px;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 64px 80px 48px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--forest); color: var(--cream);
+      padding: 6px 16px; border-radius: 100px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 32px;
+      width: fit-content;
+    }
+    .hero-badge .maple { font-size: 1rem; }
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      color: var(--forest);
+      margin-bottom: 24px;
+    }
+    h1 em { font-style: italic; color: var(--bark); }
+    .hero-desc {
+      font-size: 1.05rem; line-height: 1.7; color: var(--muted);
+      max-width: 420px; margin-bottom: 40px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--red); color: white;
+      padding: 14px 32px; border-radius: 4px;
+      font-weight: 600; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #a80d24; transform: translateY(-1px); }
+    .btn-secondary {
+      border: 1.5px solid var(--forest); color: var(--forest);
+      padding: 14px 32px; border-radius: 4px;
+      font-weight: 500; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--forest); color: var(--cream); }
+    .hero-stats {
+      display: flex; gap: 40px; margin-top: 56px;
+      padding-top: 40px; border-top: 1px solid rgba(28,43,26,0.12);
+    }
+    .stat-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem; color: var(--forest);
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    .hero-right {
+      background: var(--forest);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-img-wrap {
+      width: 75%; aspect-ratio: 3/4;
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    }
+    .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-texture {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 70%, rgba(74,112,64,0.3) 0%, transparent 60%);
+    }
+    .hero-tag {
+      position: absolute; bottom: 48px; left: 48px;
+      background: rgba(245,240,232,0.1); backdrop-filter: blur(8px);
+      border: 1px solid rgba(245,240,232,0.2);
+      padding: 16px 24px; border-radius: 8px; color: var(--cream);
+    }
+    .hero-tag-title { font-size: 0.75rem; opacity: 0.6; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .hero-tag-val { font-family: 'DM Serif Display', serif; font-size: 1.1rem; }
+
+    /* CANADIAN VERIFIED BANNER */
+    .verified-banner {
+      background: var(--forest);
+      color: var(--cream);
+      padding: 16px 48px;
+      display: flex; align-items: center; justify-content: center; gap: 48px;
+      flex-wrap: wrap;
+    }
+    .verified-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.85rem; font-weight: 500;
+    }
+    .verified-item .icon { font-size: 1.1rem; }
+
+    /* PRODUCT */
+    #product { padding: 100px 48px; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--bark); margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: var(--forest); margin-bottom: 16px; line-height: 1.2;
+    }
+
+    .product-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 32px; margin-top: 56px;
+    }
+    .product-card {
+      background: white; border-radius: 8px;
+      overflow: hidden; transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(28,43,26,0.08);
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(28,43,26,0.12); }
+    .product-img {
+      aspect-ratio: 4/3; overflow: hidden;
+      background: var(--forest);
+    }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .product-card:hover .product-img img { transform: scale(1.04); }
+    .product-info { padding: 24px; }
+    .product-name { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--forest); margin-bottom: 8px; }
+    .product-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .product-bottom { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-size: 1.3rem; font-weight: 700; color: var(--forest); }
+    .product-price .was { font-size: 0.85rem; color: var(--muted); text-decoration: line-through; font-weight: 400; margin-right: 4px; }
+    .product-buy {
+      background: var(--forest); color: var(--cream);
+      padding: 10px 20px; border-radius: 4px; font-size: 0.85rem;
+      font-weight: 500; cursor: pointer; border: none; transition: background 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .product-buy:hover { background: var(--moss); }
+
+    /* FEATURED PRODUCT */
+    .featured-product {
+      background: white; border-radius: 12px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      overflow: hidden; margin-top: 80px;
+      border: 1px solid rgba(28,43,26,0.08);
+      box-shadow: 0 20px 60px rgba(28,43,26,0.08);
+    }
+    .featured-img { background: var(--forest); min-height: 500px; position: relative; overflow: hidden; }
+    .featured-img img { width: 100%; height: 100%; object-fit: cover; }
+    .featured-badge {
+      position: absolute; top: 24px; left: 24px;
+      background: var(--red); color: white;
+      padding: 6px 16px; border-radius: 100px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .featured-info { padding: 64px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .featured-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bark); margin-bottom: 16px; }
+    .featured-name { font-family: 'DM Serif Display', serif; font-size: 2.2rem; color: var(--forest); margin-bottom: 16px; line-height: 1.2; }
+    .featured-desc { font-size: 0.95rem; line-height: 1.7; color: var(--muted); margin-bottom: 32px; }
+    .featured-specs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px; }
+    .spec { padding: 16px; background: var(--cream); border-radius: 8px; }
+    .spec-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 4px; }
+    .spec-val { font-size: 0.95rem; font-weight: 600; color: var(--forest); }
+    .featured-price { font-size: 2rem; font-weight: 700; color: var(--forest); margin-bottom: 24px; }
+    .featured-price .cad { font-size: 1rem; color: var(--muted); font-weight: 400; }
+
+    /* GEO OPTIMIZED DESCRIPTION */
+    .geo-description {
+      background: var(--cream); border: 1px solid rgba(28,43,26,0.12);
+      border-radius: 8px; padding: 20px 24px; margin-bottom: 32px;
+    }
+    .geo-label {
+      display: flex; align-items: center; gap-8px;
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--bark); margin-bottom: 10px;
+    }
+    .geo-label .ai-badge {
+      background: var(--forest); color: var(--cream);
+      padding: 2px 10px; border-radius: 100px; font-size: 0.65rem;
+      margin-left: 8px;
+    }
+    #geo-desc-text { font-size: 0.9rem; line-height: 1.7; color: var(--text); }
+
+    /* STORY */
+    .story {
+      background: var(--forest); color: var(--cream);
+      padding: 100px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .story h2 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; margin-bottom: 24px; }
+    .story p { font-size: 0.95rem; line-height: 1.8; opacity: 0.8; margin-bottom: 16px; }
+    .story-visual {
+      background: var(--moss); border-radius: 8px;
+      aspect-ratio: 4/3; overflow: hidden;
+    }
+    .story-visual img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+
+    /* FOOTER */
+    footer {
+      background: var(--text); color: var(--cream);
+      padding: 48px; text-align: center;
+    }
+    .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 16px; }
+    .footer-logo span { color: var(--red); }
+    footer p { font-size: 0.85rem; opacity: 0.5; }
+
+    /* CANADACLIP INTERCEPT TOAST */
+    .clip-toast {
+      position: fixed; bottom: 32px; right: 32px; z-index: 1000;
+      background: #050C1A; border: 1px solid #1A2E4A;
+      border-radius: 12px; padding: 16px 20px; width: 300px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      transform: translateY(100px); opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .clip-toast.show { transform: translateY(0); opacity: 1; }
+    .clip-toast-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #5A7A9E; margin-bottom: 6px; }
+    .clip-toast-title { font-size: 0.9rem; font-weight: 600; color: #E8EDF5; margin-bottom: 4px; }
+    .clip-toast-sub { font-size: 0.75rem; color: #5A7A9E; }
+    .clip-toast-bar { height: 2px; background: #1A2E4A; border-radius: 1px; margin-top: 12px; overflow: hidden; }
+    .clip-toast-progress { height: 100%; background: #C8102E; width: 0%; transition: width 3s linear; }
+
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .hero-left { padding: 40px 24px; }
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .featured-product { grid-template-columns: 1fr; }
+      .story { grid-template-columns: 1fr; }
+      #product { padding: 60px 24px; }
+      .verified-banner { gap: 24px; padding: 16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Northbound<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#product">Shop</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#">Materials</a></li>
+    </ul>
+    <a href="#product" class="nav-cta">Shop Now</a>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="maple">🍁</span>
+        Handmade in Ontario, Canada
+      </div>
+      <h1>Carry more.<br /><em>Waste less.</em><br />Go further.</h1>
+      <p class="hero-desc">
+        Every Northbound pack is cut, stitched, and finished by hand in our Kitchener workshop.
+        Built for Canadian trails, city commutes, and everything in between.
+      </p>
+      <div class="hero-actions">
+        <a href="#product" class="btn-primary">Shop Packs →</a>
+        <a href="#story" class="btn-secondary">Our Story</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">2,400+</div>
+          <div class="stat-label">Packs made</div>
+        </div>
+        <div>
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Canadian made</div>
+        </div>
+        <div>
+          <div class="stat-num">12yr</div>
+          <div class="stat-label">Warranty</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-texture"></div>
+      <div class="hero-img-wrap">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80" alt="City Pack 28L" />
+      </div>
+      <div class="hero-tag">
+        <div class="hero-tag-title">Featured Pack</div>
+        <div class="hero-tag-val">City Pack 28L — $179</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="verified-banner">
+    <div class="verified-item"><span class="icon">🍁</span> Canadian Verified Business</div>
+    <div class="verified-item"><span class="icon">🧵</span> Handstitched in Kitchener, ON</div>
+    <div class="verified-item"><span class="icon">♻️</span> Recycled canvas & hardware</div>
+    <div class="verified-item"><span class="icon">📦</span> Free shipping across Canada</div>
+  </div>
+
+  <section id="product">
+    <div class="section-label">Our Collection</div>
+    <div class="section-title">Built to last a lifetime</div>
+
+    <!-- FEATURED PRODUCT with GEO-optimized description -->
+    <div class="featured-product">
+      <div class="featured-img">
+        <div class="featured-badge">Best Seller</div>
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=700&q=80" alt="City Pack 28L" />
+      </div>
+      <div class="featured-info">
+        <div class="featured-label">Flagship Product</div>
+        <div class="featured-name">City Pack 28L</div>
+
+        <div class="geo-description">
+          <div class="geo-label">Product Description <span class="ai-badge">✨ AI Optimized</span></div>
+          <div id="geo-desc-text">Northbound Packs City Pack 28L — handmade canvas hiking backpack. Durable YKK zippers. Padded laptop sleeve. Multiple colors. Ships Canada. $179.</div>
+        </div>
+
+        <div class="featured-specs">
+          <div class="spec">
+            <div class="spec-label">Capacity</div>
+            <div class="spec-val">28 Litres</div>
+          </div>
+          <div class="spec">
+            <div class="spec-label">Material</div>
+            <div class="spec-val">Waxed Canvas</div>
+          </div>
+          <div class="spec">
+            <div class="spec-label">Laptop Sleeve</div>
+            <div class="spec-val">Up to 16"</div>
+          </div>
+          <div class="spec">
+            <div class="spec-label">Made in</div>
+            <div class="spec-val">Kitchener, ON 🍁</div>
+          </div>
+        </div>
+        <div class="featured-price">$179 <span class="cad">CAD</span></div>
+        <a href="#" class="btn-primary" style="width:fit-content">Add to Cart →</a>
+      </div>
+    </div>
+
+    <div class="product-grid" style="margin-top: 64px">
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=400&q=80" alt="RidgeFlex" />
+        </div>
+        <div class="product-info">
+          <div class="product-name">RidgeFlex Waterproof</div>
+          <div class="product-desc">30L technical pack with waterproof roll-top. Built for serious trail use.</div>
+          <div class="product-bottom">
+            <div class="product-price">$195</div>
+            <a href="#" class="product-buy">Shop</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1473188588951-666fce8e7c68?w=400&q=80" alt="Summit Day Pack" />
+        </div>
+        <div class="product-info">
+          <div class="product-name">Summit Day Pack</div>
+          <div class="product-desc">22L lightweight pack for day hikes and weekend getaways.</div>
+          <div class="product-bottom">
+            <div class="product-price">$149</div>
+            <a href="#" class="product-buy">Shop</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card">
+        <div class="product-img">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=80" alt="Trail Lite" />
+        </div>
+        <div class="product-info">
+          <div class="product-name">Trail Lite</div>
+          <div class="product-desc">18L ultralight everyday pack. Minimalist design, maximum utility.</div>
+          <div class="product-bottom">
+            <div class="product-price">$89</div>
+            <a href="#" class="product-buy">Shop</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story" id="story">
+    <div>
+      <h2>Made by hand.<br />Made in Canada.</h2>
+      <p>We started Northbound in a garage in Kitchener with one sewing machine and a roll of waxed canvas. Every pack is still cut and stitched by our small team — no outsourcing, no shortcuts.</p>
+      <p>When you buy a Northbound pack, you're supporting a Canadian small business that pays fair wages, sources locally, and backs every product with a 12-year warranty.</p>
+      <a href="#product" class="btn-primary" style="margin-top: 16px; width: fit-content; display: inline-flex">Shop the collection →</a>
+    </div>
+    <div class="story-visual">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" alt="Canadian wilderness" />
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">Northbound<span>.</span></div>
+    <p>Handmade in Kitchener, Ontario 🍁 · © 2026 Northbound Packs</p>
+    <p style="margin-top: 8px; font-size: 0.75rem; opacity: 0.3;">Powered by CanadaClip — helping Canadian small businesses win in AI search</p>
+  </footer>
+
+  <!-- CanadaClip intercept toast -->
+  <div class="clip-toast" id="clipToast">
+    <div class="clip-toast-label">🍁 CanadaClip intercepted</div>
+    <div class="clip-toast-title">You found a Canadian alternative</div>
+    <div class="clip-toast-sub">Instead of Jansport → Northbound Packs</div>
+    <div class="clip-toast-bar"><div class="clip-toast-progress" id="clipProgress"></div></div>
+  </div>
+
+  <script>
+    // Supabase realtime for GEO description updates
+    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+    async function fetchDescription() {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/merchant_listings?merchant_id=eq.backpack&select=description`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+        const data = await res.json();
+        if (data && data[0]?.description) {
+          document.getElementById('geo-desc-text').textContent = data[0].description;
+        }
+      } catch(e) { /* keep default text */ }
+    }
+
+    fetchDescription();
+
+    // Poll every 5 seconds for live demo
+    setInterval(fetchDescription, 5000);
+
+    // Show CanadaClip toast after 2.5s
+    setTimeout(() => {
+      const toast = document.getElementById('clipToast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        document.getElementById('clipProgress').style.width = '100%';
+      }, 100);
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 4500);
+    }, 2500);
+  </script>
+</body>
+</html>
