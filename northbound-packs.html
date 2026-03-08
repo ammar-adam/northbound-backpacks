@@ -465,23 +465,29 @@
   </div>
 
   <script>
-    // Supabase realtime for GEO description updates
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+    const SUPABASE_URL = 'https://wogcjsgnzlpwhoezcybp.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvZ2Nqc2duemxwd2hvZXpjeWJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MDkwNTcsImV4cCI6MjA4ODQ4NTA1N30.gkAULjx8LXfi9-iU3oKxs6SxcVoX9VHlyO_TV8017IA';
 
     async function fetchDescription() {
       try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/merchant_listings?merchant_id=eq.backpack&select=description`, {
-          headers: {
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/merchant_listings` +
+          `?product_id=eq.city-pack-28l` +
+          `&merchant_id=eq.northbound-packs` +
+          `&select=description,updated_at` +
+          `&limit=1`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
           }
-        });
+        );
         const data = await res.json();
         if (data && data[0]?.description) {
           document.getElementById('geo-desc-text').textContent = data[0].description;
         }
-      } catch(e) { /* keep default text */ }
+      } catch(e) { /* keep default text on error */ }
     }
 
     fetchDescription();
